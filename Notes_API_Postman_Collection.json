@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "4dfdaa63-1a85-460f-ac98-d26363a2a50b",
+		"name": "Notes Management API",
+		"description": "API Documentation for Notes Management Assignment 02",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRUD Operations",
+			"item": [
+				{
+					"name": "Create Single Note",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Team standup agenda\",\n  \"content\": \"Discuss sprint blockers and deployment plan\",\n  \"category\": \"work\",\n  \"isPinned\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/notes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Bulk Notes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"notes\": [\n    { \"title\": \"Note one\", \"content\": \"Content one\", \"category\": \"work\" },\n    { \"title\": \"Note two\", \"content\": \"Content two\", \"category\": \"study\" },\n    { \"title\": \"Note three\", \"content\": \"Content three\", \"category\": \"personal\" }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/notes/bulk",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								"bulk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Note By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notes/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ENTER_NOTE_ID"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Route Parameters",
+			"item": [
+				{
+					"name": "Get By Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notes/category/work",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								"category",
+								"work"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Pin Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notes/status/true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								"status",
+								"true"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Filtering & Pagination",
+			"item": [
+				{
+					"name": "General Filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notes/filter?category=work&isPinned=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "work"
+								},
+								{
+									"key": "isPinned",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Paginate All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notes/paginate?page=1&limit=5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								"paginate"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	]
+}
