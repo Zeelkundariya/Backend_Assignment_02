@@ -148,8 +148,19 @@ exports.replaceNote = async (req, res) => {
       });
     }
 
-    const note = await Note.findOneAndReplace({ _id: id }, req.body, {
+    // Check for empty body or missing required fields for PUT
+    const { title, content } = req.body;
+    if (!title || !content) {
+      return res.status(400).json({
+        success: false,
+        message: "Title and content are required for full replacement",
+        data: null,
+      });
+    }
+
+    const note = await Note.findByIdAndUpdate(id, req.body, {
       new: true,
+      overwrite: true,
       runValidators: true,
     });
 
