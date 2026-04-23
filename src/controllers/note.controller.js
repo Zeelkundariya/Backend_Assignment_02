@@ -617,3 +617,37 @@ exports.paginateByCategory = async (req, res) => {
     });
   }
 };
+
+// @desc    Sort all notes
+// @route   GET /api/notes/sort
+// @access  Public
+exports.sortNotes = async (req, res) => {
+  try {
+    const allowed = ["title", "createdAt", "updatedAt", "category"];
+    const sortBy = req.query.sortBy || "createdAt";
+    const order = req.query.order === "asc" ? 1 : -1;
+
+    if (!allowed.includes(sortBy)) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid sortBy. Allowed: ${allowed.join(", ")}`,
+        data: null,
+      });
+    }
+
+    const notes = await Note.find().sort({ [sortBy]: order });
+
+    res.status(200).json({
+      success: true,
+      message: `Notes sorted by ${sortBy} in ${order === 1 ? "ascending" : "descending"} order`,
+      count: notes.length,
+      data: notes,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
