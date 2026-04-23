@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createNote, createBulkNotes, getAllNotes, getNoteById, replaceNote, updateNote, deleteNote, deleteBulkNotes, getNotesByCategory, getNotesByStatus, getNoteSummary, filterNotes, getPinnedNotes, filterByCategory, filterByDateRange, paginateNotes } = require("../controllers/note.controller");
+const { createNote, createBulkNotes, getAllNotes, getNoteById, replaceNote, updateNote, deleteNote, deleteBulkNotes, getNotesByCategory, getNotesByStatus, getNoteSummary, filterNotes, getPinnedNotes, filterByCategory, filterByDateRange, paginateNotes, paginateByCategory } = require("../controllers/note.controller");
 
 // CRUD bulk routes first
 router.post("/bulk", createBulkNotes);
@@ -18,6 +18,7 @@ router.get("/filter/date-range", filterByDateRange);
 
 // Pagination
 router.get("/paginate", paginateNotes);
+router.get("/paginate/category/:category", paginateByCategory);
 
 // CRUD single-item routes
 router.post("/", createNote);
