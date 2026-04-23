@@ -294,6 +294,17 @@ exports.deleteBulkNotes = async (req, res) => {
       });
     }
 
+    // Validate all IDs in the array
+    for (const id of ids) {
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid ID found: ${id}`,
+          data: null,
+        });
+      }
+    }
+
     const result = await Note.deleteMany({ _id: { $in: ids } });
 
     res.status(200).json({
