@@ -412,3 +412,36 @@ exports.getNoteSummary = async (req, res) => {
     });
   }
 };
+
+// @desc    Filter notes
+// @route   GET /api/notes/filter
+// @access  Public
+exports.filterNotes = async (req, res) => {
+  try {
+    const filter = {};
+    const { category, isPinned } = req.query;
+
+    if (category) {
+      filter.category = category;
+    }
+
+    if (isPinned !== undefined) {
+      filter.isPinned = isPinned === "true";
+    }
+
+    const notes = await Note.find(filter);
+
+    res.status(200).json({
+      success: true,
+      message: "Notes fetched successfully",
+      count: notes.length,
+      data: notes,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
