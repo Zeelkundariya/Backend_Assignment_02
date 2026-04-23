@@ -4,8 +4,8 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-// Routes Placeholder
-// app.use("/api/notes", require("./routes/note.routes"));
+// Routes
+app.use("/api/notes", require("./routes/note.routes"));
 
 // Basic Health Check
 app.get("/", (req, res) => {
