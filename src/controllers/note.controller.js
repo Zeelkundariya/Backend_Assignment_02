@@ -36,3 +36,35 @@ exports.createNote = async (req, res) => {
     });
   }
 };
+
+// @desc    Create multiple notes
+// @route   POST /api/notes/bulk
+// @access  Public
+exports.createBulkNotes = async (req, res) => {
+  try {
+    const { notes } = req.body;
+
+    // Validation
+    if (!notes || !Array.isArray(notes) || notes.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "notes array is required and cannot be empty",
+        data: null,
+      });
+    }
+
+    const createdNotes = await Note.insertMany(notes);
+
+    res.status(201).json({
+      success: true,
+      message: `${createdNotes.length} notes created successfully`,
+      data: createdNotes,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
